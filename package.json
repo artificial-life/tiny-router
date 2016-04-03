@@ -1,0 +1,30 @@
+{
+  "name": "tiny-router",
+  "version": "1.0.0",
+  "description": "0.1.0",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/artificial-life/tiny-router.git"
+  },
+  "keywords": [
+    "reverse",
+    "router",
+    "iris",
+    "event",
+    "router",
+    "socket.io"
+  ],
+  "author": "SS",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/artificial-life/tiny-router/issues"
+  },
+  "homepage": "https://github.com/artificial-life/tiny-router#readme"
+}
