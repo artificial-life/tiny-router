@@ -1,3 +1,7 @@
+# project
+node_modules
+build
+
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
