@@ -17,7 +17,8 @@ class TinyRouter {
 		if (!_.isString(route)) throw new Error('Route must be string');
 
 		// let _callback = _.isFunction(callback) ? callback : this.default_callback;
-		let route_data = this.hasMask(route) ? route.split(this.delimiter) : route;
+		let has_mask = this.hasMask(route);
+		let route_data = has_mask ? route.split(this.delimiter) : route;
 
 		if (this.routes.hasOwnProperty(route)) {
 			this.routes[route].count += 1;
@@ -25,7 +26,8 @@ class TinyRouter {
 			this.routes[route] = {
 				data: route_data,
 				count: 1
-			}
+			};
+
 		};
 
 		return true;
@@ -55,18 +57,19 @@ class TinyRouter {
 		this.routes = {};
 	}
 	parse(event, data) {
-		_.forEach(this.routes, (route) => {
+		_.forEach(this.routes, (route, route_name) => {
 			if (_.isString(route.data)) {
 				if (route.data == event) {
 					this.default_callback(event, data);
-					return false;
 				}
 				return true;
 			}
 
 			let event_parts = event.split(this.delimiter);
 			if (event_parts.length !== route.data.length) return true;
+
 			let result = true;
+			let parts = [];
 
 			_.forEach(event_parts, (part, index) => {
 				let route_part = route.data[index];
@@ -74,11 +77,12 @@ class TinyRouter {
 					result = false;
 					return false;
 				}
+				if (route_part == "*") parts.push(part);
 			});
 
 			if (result) {
-				this.default_callback(event, data);
-				return false;
+				if (parts.length) data._route_params = parts;
+				this.default_callback(route_name, data);
 			}
 		});
 	}
